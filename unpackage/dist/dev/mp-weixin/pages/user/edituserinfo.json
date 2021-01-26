@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "个人信息",
+  "usingComponents": {
+    "min-popup": "/pages/components/min-picker/min-popup",
+    "min-picker": "/pages/components/min-picker/min-picker"
+  }
+}

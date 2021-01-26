@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "相亲",
+  "usingComponents": {
+    "uni-load-more": "/pages/components/uni-load-more/uni-load-more"
+  }
+}

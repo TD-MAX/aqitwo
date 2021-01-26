@@ -1,0 +1,58 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/found/index",
+    "pages/message/index",
+    "pages/user/index",
+    "pages/found/writeabout",
+    "pages/index/userinfo",
+    "pages/message/notice",
+    "pages/message/like",
+    "pages/user/fans",
+    "pages/user/userinfo",
+    "pages/user/edituserinfo",
+    "pages/HM-chat/HM-chat",
+    "pages/HM-chat/HM-details/HM-details",
+    "pages/HM-chat/HM-hand/HM-hand"
+  ],
+  "subPackages": [],
+  "window": {
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "",
+    "navigationBarBackgroundColor": "#F8F8F8",
+    "backgroundColor": "#F8F8F8"
+  },
+  "tabBar": {
+    "color": "#C0C4CC",
+    "selectedColor": "#fa436a",
+    "borderStyle": "black",
+    "backgroundColor": "#ffffff",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "iconPath": "static/tab-home.png",
+        "selectedIconPath": "static/tab-home-current.png",
+        "text": "首页"
+      },
+      {
+        "pagePath": "pages/found/index",
+        "iconPath": "static/tab-cate.png",
+        "selectedIconPath": "static/tab-cate-current.png",
+        "text": "发现"
+      },
+      {
+        "pagePath": "pages/message/index",
+        "iconPath": "static/tab-cart.png",
+        "selectedIconPath": "static/tab-cart-current.png",
+        "text": "消息"
+      },
+      {
+        "pagePath": "pages/user/index",
+        "iconPath": "static/tab-my.png",
+        "selectedIconPath": "static/tab-my-current.png",
+        "text": "我的"
+      }
+    ]
+  },
+  "usingComponents": {}
+}

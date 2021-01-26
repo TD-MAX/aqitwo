@@ -1,0 +1,167 @@
+{
+    "name" : "啊企",
+    "appid" : "__UNI__5A45D02",
+    "description" : "",
+    "versionName" : "1.1.2",
+    "versionCode" : "100",
+    "transformPx" : false,
+    /* 5+App特有相关 */
+    "app-plus" : {
+        "usingComponents" : true,
+        "nvueCompiler" : "uni-app",
+        "compilerVersion" : 3,
+        "compatible" : {
+            "ignoreVersion" : true
+        },
+        "splashscreen" : {
+            "alwaysShowBeforeRender" : true,
+            "waiting" : false,
+            "autoclose" : true,
+            "delay" : 0
+        },
+        /* 模块配置 */
+        "modules" : {
+            "Geolocation" : {},
+            "Payment" : {},
+            "Maps" : {},
+            "VideoPlayer" : {},
+            "Share" : {}
+        },
+        /* 应用发布信息 */
+        "distribute" : {
+            /* android打包配置 */
+            "android" : {
+                "permissions" : [
+                    "<uses-feature android:name=\"android.hardware.camera\"/>",
+                    "<uses-feature android:name=\"android.hardware.camera.autofocus\"/>",
+                    "<uses-permission android:name=\"android.permission.ACCESS_COARSE_LOCATION\"/>",
+                    "<uses-permission android:name=\"android.permission.ACCESS_FINE_LOCATION\"/>",
+                    "<uses-permission android:name=\"android.permission.ACCESS_NETWORK_STATE\"/>",
+                    "<uses-permission android:name=\"android.permission.ACCESS_WIFI_STATE\"/>",
+                    "<uses-permission android:name=\"android.permission.CALL_PHONE\"/>",
+                    "<uses-permission android:name=\"android.permission.CAMERA\"/>",
+                    "<uses-permission android:name=\"android.permission.CHANGE_NETWORK_STATE\"/>",
+                    "<uses-permission android:name=\"android.permission.CHANGE_WIFI_STATE\"/>",
+                    "<uses-permission android:name=\"android.permission.FLASHLIGHT\"/>",
+                    "<uses-permission android:name=\"android.permission.INTERNET\"/>",
+                    "<uses-permission android:name=\"android.permission.MODIFY_AUDIO_SETTINGS\"/>",
+                    "<uses-permission android:name=\"android.permission.MOUNT_UNMOUNT_FILESYSTEMS\"/>",
+                    "<uses-permission android:name=\"android.permission.READ_LOGS\"/>",
+                    "<uses-permission android:name=\"android.permission.READ_PHONE_STATE\"/>",
+                    "<uses-permission android:name=\"android.permission.READ_SMS\"/>",
+                    "<uses-permission android:name=\"android.permission.RECORD_AUDIO\"/>",
+                    "<uses-permission android:name=\"android.permission.SEND_SMS\"/>",
+                    "<uses-permission android:name=\"android.permission.VIBRATE\"/>",
+                    "<uses-permission android:name=\"android.permission.WAKE_LOCK\"/>",
+                    "<uses-permission android:name=\"android.permission.WRITE_EXTERNAL_STORAGE\"/>",
+                    "<uses-permission android:name=\"android.permission.WRITE_SETTINGS\"/>",
+                    "<uses-permission android:name=\"android.permission.WRITE_SMS\"/>",
+                    "<uses-permission android:name=\"android.permission.INSTALL_PACKAGES\"/>",
+                    "<uses-permission android:name=\"android.permission.REQUEST_INSTALL_PACKAGES\"/>"
+                ],
+                "abiFilters" : [ "armeabi-v7a", "x86" ],
+                "autoSdkPermissions" : true
+            },
+            /* ios打包配置 */
+            "ios" : {},
+            /* SDK配置 */
+            "sdkConfigs" : {
+                "ad" : {},
+                "payment" : {
+                    "weixin" : {
+                        "__platform__" : [ "ios", "android" ],
+                        "appid" : "wx8049c236977b91d8",
+                        "UniversalLinks" : "https://www.aqionlie.cn"
+                    },
+                    "appleiap" : {},
+                    "alipay" : {
+                        "__platform__" : [ "android" ]
+                    }
+                },
+                "maps" : {
+                    "amap" : {
+                        "appkey_ios" : "aedc2fc9a6250a5626d65dc2a55536e3",
+                        "appkey_android" : "2c3d6d2b2934fa050fed40068fe40311"
+                    }
+                },
+                "geolocation" : {
+                    "amap" : {
+                        "__platform__" : [ "ios", "android" ],
+                        "appkey_ios" : "aedc2fc9a6250a5626d65dc2a55536e3",
+                        "appkey_android" : "2c3d6d2b2934fa050fed40068fe40311"
+                    }
+                },
+                "oauth" : {},
+                "push" : {},
+                "share" : {
+                    "weixin" : {
+                        "appid" : "wx8049c236977b91d8",
+                        "UniversalLinks" : "https://www.aqionlie.cn"
+                    }
+                }
+            },
+            "splashscreen" : {
+                "androidStyle" : "default",
+                "android" : {
+                    "hdpi" : "static/qidong/480.png",
+                    "xhdpi" : "static/qidong/720.png",
+                    "xxhdpi" : "static/qidong/1080.png"
+                }
+            },
+            "icons" : {
+                "android" : {
+                    "hdpi" : "static/promoter/f3655d11439736cc83c9733b99b8b42.png",
+                    "xhdpi" : "static/promoter/96_96.png",
+                    "xxhdpi" : "static/promoter/83f7625dfbae5a8ecec6d14d0c8e14b.png",
+                    "xxxhdpi" : "static/promoter/cc3b99cfc2ad5c4fe5011dc8fd01edb.png"
+                },
+                "ios" : {
+                    "appstore" : "static/ios_tu/1024.png",
+                    "ipad" : {
+                        "app" : "unpackage/res/icons/76x76.png",
+                        "app@2x" : "unpackage/res/icons/152x152.png",
+                        "notification" : "unpackage/res/icons/20x20.png",
+                        "notification@2x" : "unpackage/res/icons/40x40.png",
+                        "proapp@2x" : "unpackage/res/icons/167x167.png",
+                        "settings" : "unpackage/res/icons/29x29.png",
+                        "settings@2x" : "unpackage/res/icons/58x58.png",
+                        "spotlight" : "unpackage/res/icons/40x40.png",
+                        "spotlight@2x" : "unpackage/res/icons/80x80.png"
+                    },
+                    "iphone" : {
+                        "app@2x" : "static/ios_tu/120.png",
+                        "app@3x" : "static/ios_tu/180.png",
+                        "notification@2x" : "static/ios_tu/40.png",
+                        "notification@3x" : "static/ios_tu/60.png",
+                        "settings@2x" : "static/ios_tu/58.png",
+                        "settings@3x" : "static/ios_tu/87.png",
+                        "spotlight@2x" : "static/ios_tu/80.png",
+                        "spotlight@3x" : "static/ios_tu/120.png"
+                    }
+                }
+            }
+        }
+    },
+    /* 快应用特有相关 */
+    "quickapp" : {},
+    /* 小程序特有相关 */
+    "mp-weixin" : {
+        "appid" : "",
+        "setting" : {
+            "urlCheck" : false
+        },
+        "usingComponents" : true
+    },
+    "mp-alipay" : {
+        "usingComponents" : true
+    },
+    "mp-baidu" : {
+        "usingComponents" : true
+    },
+    "mp-toutiao" : {
+        "usingComponents" : true
+    },
+    "uniStatistics" : {
+        "enable" : false
+    }
+}
