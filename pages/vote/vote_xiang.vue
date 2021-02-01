@@ -57,9 +57,11 @@
 				</view>
 
 				<view class="infotext">
-					<!-- <p>简介：山西潞企科技有限公司成立于2020年05月20日，注册地位于山西省长治市太行北路188号(科技企业加速器6号楼2层208室)，法定代表人为张文娜。经营范围包括计算机软件技术开发、技术服务、技术咨询；设计、制作、代理、发布国内户外广告；图文设计制作；会议会展劳力服务；庆典礼仪劳力服务；展览展示劳力服务；企业形象策划；市场营销策划；企业管理咨询；摄影摄像服务；文化艺术交流活动策划。（依法须经批准的项目，经相关部门批准后方可开展经营活动）</p>
-					<p>地址：山西省长治市太行北路188号(科技企业加速器6号楼2层208室)</p> -->
-					<p>电话：{{lists.enterprisePhone}} 官网：- 邮箱：-</p>
+					<p>简介：{{lists.enterpriseInfo ? lists.enterpriseInfo : '该公司很懒，什么都没有留下'}}</p>
+					<!-- <p>地址：山西省长治市太行北路188号(科技企业加速器6号楼2层208室)</p> -->
+					<!-- <p>电话：{{lists.enterprisePhone}}</p>
+					<p>官网：-</p>
+					<p>邮箱：-</p> -->
 				</view>
 			</view>
 		</view>
@@ -118,8 +120,16 @@
 				.then(res=> {
 					console.log(res)
 					if (res.data.msg !== '您今日已投票') {
-						uni.showToast({
-							title:'投票成功'
+						// uni.showToast({
+						// 	title:'投票成功'
+						// })
+						var msg = {
+							id: this.id,
+							mingci: this.mingci
+						}
+						uni.navigateTo({
+							url: './vote_sucess?data=' + JSON.stringify(msg),
+							animationType: 'slide-in-bottom'
 						})
 					} else {
 						this.$api.msg(res.data.msg)
@@ -160,7 +170,7 @@
 	.title {
 		display: flex;
 		flex-flow: row;
-		height: 380upx;
+		height: 400upx;
 		width: 100%;
 		margin: 0 auto;
 		background-image: url(../../static/paihangban/cansai1.png);
@@ -229,13 +239,14 @@
 	}
 
 	.zhichi {
-		width: 200upx;
-		/* height: 100%; */
+		width: 160upx;
+		height: 60upx;
 		background-color: #1673FF;
 		color: #FFFFFF;
 		background-image: url(../../static/7.png);
 		background-size: 100% 100%;
 		text-align: center;
+		line-height: 60upx;
 	}
 
 	.poll {
@@ -295,9 +306,10 @@
 	}
 
 	.pollnum {
-		font-size: 20upx;
+		font-size: 30upx;
 		float: left;
-		margin-left: 10%;
+		color: red;
+		// margin-left: 10%;
 	}
 
 	.info {
@@ -324,7 +336,7 @@
 
 	.infotitleleft {
 		display: flex;
-		width: 45%;
+		width: 50%;
 		font-size: 35upx;
 	}
 
@@ -332,8 +344,9 @@
 		width: 320upx;
 		display: flex;
 		justify-content: space-around;
-		align-items: center;
-		font-size: 20upx;
+		// align-items: center;
+		line-height: 52upx;
+		font-size: 24upx;
 		// border: 1px solid red;
 	}
 
@@ -354,6 +367,7 @@
 	.infotext p {
 		font-size: 28upx;
 		text-indent: 56upx;
+		line-height: 50upx;
 	}
 	.baoming {
 		width: 100%;

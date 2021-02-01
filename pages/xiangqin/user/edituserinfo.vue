@@ -32,6 +32,12 @@
 		<view class="list-cell b-b m-t" hover-class="cell-hover" :hover-stay-time="50" @click="zhaopian">
 			<text class="cell-tit">设置照片墙</text>
 		</view>
+		<view class="list-cell b-b m-t" hover-class="cell-hover" :hover-stay-time="50" @click="shiming">
+			<text class="cell-tit">实名认证</text>
+		</view>
+		<view class="list-cell b-b m-t" hover-class="cell-hover" :hover-stay-time="50" @click="changyongyu">
+			<text class="cell-tit">设置常用语</text>
+		</view>
 		<view class="list-cell b-b m-t" hover-class="cell-hover" :hover-stay-time="50">
 			<text class="cell-tit" @click="ziliao">资料保证金</text>
 			<text style="color: red;">{{auditStatus}}</text>
@@ -136,6 +142,18 @@
 			})
 		},
 		methods: {
+			//常用语
+			changyongyu(){
+				uni.navigateTo({
+					url:'./commonmsg'
+				})
+			},
+			//实名认证
+			shiming(){
+				uni.navigateTo({
+					url:'./realname'
+				})
+			},
 			//设置照片墙
 			zhaopian(){
 				uni.navigateTo({

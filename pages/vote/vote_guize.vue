@@ -1,6 +1,7 @@
 <template>
 	<view class="content">
 		<view class='body'>
+			
 			<view class="bodyson1 son">
 				<view class="bodyson1text">
 					<view style="color:#FFFFFF;font-size: 50upx;">聚优名企</view>
@@ -10,36 +11,24 @@
 					<image src="../../static/logo.png" mode="" style="width: 100upx;height: 100%;"></image>
 				</view>
 			</view>
+			
+			<view class="son bodyson3">
+				<view class="bigtitle">主办方</view>
+				<view class="bodysontext">
+					<view class="text">
+						<view>主办方：啊企————全国企业支持服务平台</view>
+						<view>官方邮箱：sxqiye@163.com</view>
+						<view>客服电话：0355-2023850</view>
+					</view>
+				</view>
+			</view>
 
 			<view class="bodyson son">
 				<view class="bodysontitle">
 					<view class="titleson">活动声明</view>
 				</view>
 				<view class="bodysontext ">
-					<view class="text">为保证活动的公平公正公开，主办方会对活动数据进行实时监控，已经发现有使用软件刷票行为，将会对企业采取相应措施，严重者取消推荐资格。
-					</view>
-				</view>
-			</view>
-
-
-			<view class="son bodyson3">
-				<view class="bigtitle">活动荣誉</view>
-				<view class="bodysontext">
-					<view class="text">
-						<view>1，入选<text>前十</text>即可获得由【聚优名企】<text>免费</text>颁发奖品</view>
-						<view>2，实物奖品活动结束<text>自助申请</text>。 </view>
-						<view>3，活动期间企业<text>免费宣传</text>。</view>
-					</view>
-				</view>
-			</view>
-
-			<view class="son bodyson3">
-				<view class="bigtitle">活动介绍</view>
-				<view class="bodysontext">
-					<view class="text">
-						<view>1，入选<text>前十</text>即可获得由【聚优名企】<text>免费</text>颁发奖品</view>
-						<view>2，实物奖品活动结束<text>自助申请</text>。 </view>
-						<view>3，活动期间企业<text>免费宣传</text>。</view>
+					<view class="text">本次投票将进行公平、公正、公开的评选流程，维护每位参赛者的权益，防止恶意刷票等有违公正的行为，一经发现，取消参赛资格。为规范网络与微信投票行为，预防恶意投票现象的产生，保障所有参选者在公平公正的环境下接受社会投票。依据网络投票公平公正的原则，每日每个IP限投一票。
 					</view>
 				</view>
 			</view>
@@ -48,52 +37,32 @@
 				<view class="bigtitle">活动规则</view>
 				<view class="bodysontext">
 					<view class="text">
-						<view>1，入选<text>前十</text>即可获得由【聚优名企】<text>免费</text>颁发奖品</view>
-						<view>2，实物奖品活动结束<text>自助申请</text>。 </view>
-						<view>3，活动期间企业<text>免费宣传</text>。</view>
+						<view>1、投票时间:2021年2月1日至2021年5月1日</view>
+						<view>2、投票方法:选中候选人,直接投票。</view>
+						<view>3、投票次数限制:每天每用户限投1票。</view>
+						<view>4、禁止刷票,发现后取消报名者参赛资格。</view>
+						<view style="color: red;">本次投票活动均通过H5链接进行投票</view>
 					</view>
 				</view>
 			</view>
 
 			<view class="son bodyson3">
-				<view class="bigtitle">活动优势</view>
+				<view class="bigtitle">活动荣誉</view>
 				<view class="bodysontext">
 					<view class="text">
-						<view>1，入选<text>前十</text>即可获得由【聚优名企】<text>免费</text>颁发奖品</view>
-						<view>2，实物奖品活动结束<text>自助申请</text>。 </view>
-						<view>3，活动期间企业<text>免费宣传</text>。</view>
+						<view>1、入选前十名即可获得由“ 名优企业”免费颁发的各项奖品。</view>
+						<view>2、实物奖品将在活动结束后7个工作日内通过邮寄方式送达。</view>
+						<view>3、 活动结束后各大网络媒体平台免费推广。</view>
 					</view>
 				</view>
 			</view>
-
-			<view class="bodyson son">
-				<view class="bodysontitle">
-					<view class="titleson">主办方介绍</view>
-				</view>
-				<view class="bodysontext ">
-					<view class="text">为保证活动的公平公正公开，主办方会对活动数据进行实时监控，已经发现有使用软件刷票行为，将会对企业采取相应措施，严重者取消推荐资格。
-					</view>
-				</view>
-			</view>
-
-
-			<view class="son bodyson3">
-				<view class="bigtitle">企业来源</view>
-				<view class="bodysontext">
-					<view class="text">
-						<view>1，入选<text>前十</text>即可获得由【聚优名企】<text>免费</text>颁发奖品</view>
-						<view>2，实物奖品活动结束<text>自助申请</text>。 </view>
-						<view>3，活动期间企业<text>免费宣传</text>。</view>
-					</view>
-				</view>
-			</view>
-		</view>
 
 
 		<view class='baoming'>
 			<view class="bao" @click="to_zhichi">去支持</view>
 			<view class="bao" @click="to_baomin">我要报名</view>
 		</view>
+	</view>
 	</view>
 </template>
 

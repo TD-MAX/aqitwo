@@ -21,7 +21,7 @@
 					</view>
 					<view class="left_test">
 						<text class="content_text">{{x.title}}</text>
-						<text class="content_text">{{x.huodongkaishitime}}</text>
+						<text class="content_text">{{x.huodongkaishitime|time}}</text>
 					</view>
 				</view>
 			</view>
@@ -52,10 +52,10 @@
 				</view>
 			</view>
 			<view class="card_content2">
-				<view class="card_content2_text" v-for="n in 2" :key="n">
+				<view class="card_content2_text" v-for="(n,indexb) in policyList" :key="indexb">
 					<view class="card_text_left">
-						<text>共战疫情，众志成城-减税，减租等政策；北京市各企业出手扶贫</text>
-						<text>2020-03-13</text>
+						<text>{{n.title}}</text>
+						<text>{{n.date|time}}</text>
 					</view>
 					<view class="card_text_right">
 						<image 
@@ -71,14 +71,14 @@
 			</view>
 			<view class="card_head1">
 				<text>项目之家</text>
-				<view class="card_head_right">
+				<view class="card_head_right" @click="more">
 					更多
 				</view>
 			</view>
 			</u-cell-item>
 			<view class="card3_content">
-				<view class="content_box" v-for="a in 2" :key="a">
-					<text class="text_name">山西推动有限科技公司</text>
+				<view class="content_box" v-for="(a,indexa) in clist" :key="indexa">
+					<text class="text_name">{{a.qiyename}}</text>
 					<u-slider :value="10" :min="0" :max="5000" activeColor="#EC4800" inactiveColor="#ffffff" blockColor="#EC4800" blockWidth="12" ></u-slider>
 					<view class="box-bottom">
 						<view class="box-bottom-jine">
@@ -205,11 +205,26 @@
 				hdList: [], //活动；列表
 				indicator: 'round',
 				indicatorPos: 'bottomRight',
-				src:'../../static/photo.png'
+				src:'../../static/photo.png',
+				clist: [],
+				policyList: []
+			}
+		},
+		filters:{
+			time (msg) {
+				if (msg != null) {
+					let a = msg.slice(0,10)
+					return a
+				}
 			}
 		},
 		methods: {
 			change (e) {},
+			more () {
+				uni.navigateTo({
+					url: './help'
+				})
+			},
 			//顶部轮播图展示
 			imgShow () {
 				this.$http.post('cl/api/getcllunbotu',{},{})
@@ -256,12 +271,43 @@
 				.catch(err => {
 					console.log(err)
 				})
+			},
+			//项目之家
+			xmshow () {
+				this.$http.post('lessonaqi/api/lessonqiyehuzhulist',{
+					userid: uni.getStorageSync('userId'),
+					pageSize: 2,
+					pageNum: 1
+				},{})
+				.then(res =>{
+					console.log(res)
+					this.clist = res.data.rows
+				})
+				.catch(err =>{
+					console.log(err)
+				})
+			},
+			//创业政策
+			policy () {
+				this.$http.post('cl/api/getchuangyezhengcelist',{
+					pageNum: 1,
+					pageSize: 2
+				},{})
+				.then(res => {
+					console.log(res)
+					this.policyList = res.data.rows
+				})
+				.catch(err => {
+					console.log(err)
+				})
 			}
 		},
-		onShow() {
+		onLoad() {
 			this.imgShow() //轮播图展示
 			this.hdShow() //活动列表展示
 			this.interspace()  //活动空间列表展示
+			this.xmshow() //项目之家
+			this.policy() //创业政策
 		}
 	}
 </script>
@@ -367,14 +413,14 @@
 	}
 	.home_card2 {
 		width: 94%;
-		height: 380upx;
+		/* height: 380upx; */
 		margin: auto;
 		display: flex;
 		flex-direction: column;
 	}
 	.card_content2 {
 		width: 100%;
-		height: 320upx;
+		/* height: 320upx; */
 		display: flex;
 		flex-direction: column;
 	}

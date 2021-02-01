@@ -53,9 +53,9 @@
 				hui: {},
 				qiandao_statue: 'more',
 				headList: [{
-						text: '排行榜',
-						src: '../../static/qyservice/23.png',
-						path: '../ranking/index'
+						text: '网络评选',
+						src: '../../static/aqiuser/toupiao.png',
+						path: '../vote/v_list'
 					},
 					{
 						text: '签到有礼',
@@ -68,7 +68,13 @@
 						path: '../shop/shop'
 					}
 				],
-				contList: [{
+				contList: [
+					{
+						text: '排行榜',
+						src: '../../static/qyservice/23.png',
+						path: '../ranking/index'
+					},
+					{
 						text: '我的钱包',
 						src: '../../static/aqiuser/a38255b6f313208e7facc400ac15c7e.png',
 						path: '../shop/my_moneys'
@@ -87,11 +93,6 @@
 						text: '我的活动',
 						src: '../../static/aqiuser/my_huodong.png',
 						path: './my_huodong'
-					},
-					{
-						text: '投票',
-						src: '../../static/aqiuser/toupiao.png',
-						path: '../vote/vote'
 					},
 					{
 						text: '我的会员',
@@ -129,7 +130,7 @@
 			this.get_vip() //查询会员信息
 			this.$http
 				.post('lessonxiangqin/api/lessongetuser', {
-				// .post('love/api/setUserInfo', {
+					// .post('love/api/setUserInfo', {
 					userid: uni.getStorageSync('userId')
 				}, {})
 				.then(res => {

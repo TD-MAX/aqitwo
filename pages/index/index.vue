@@ -32,8 +32,14 @@
 		</view>
 
 		<!-- 广告位 -->
-		<view class="advertising" @click="qian_dao">
-			<image src="../../static/aqiuser/qiandao.gif" mode="aspectFill"></image>
+		<view class="advertising">
+			<!-- <image src="../../static/aqiuser/qiandao.gif" mode="aspectFill"></image> -->
+			<!-- <image src="../../static/paihangban/shoutou.jpg" mode="aspectFill"></image> -->
+			<swiper class="swiper" :indicator-dots="indicatorDots" :autoplay="true" :interval="3000" :duration="500">
+				<swiper-item v-for="(n, index) in imglist" :key="index" @click="qian_dao(n.path)">
+					<image :src="n.src" mode="widthFix"></image>
+				</swiper-item>
+			</swiper>
 		</view>
 
 		<!--企业信息-->
@@ -116,6 +122,16 @@
 						title: '企业荣誉',
 						srcs: '../../static/qyservice/1.png',
 						path: '../../pages/news/qiyeronyu'
+					}
+				],
+				imglist: [
+					{
+						src: '../../static/paihangban/shoutou.jpg',
+						path: '../vote/vote?data={"id":1,"name":"山西省名优企业活力榜","liu":257}'
+					},
+					{
+						src: '../../static/aqiuser/qiandao.gif',
+						path: '../swiper/swiper1'
 					}
 				],
 				pictures: '',
@@ -216,9 +232,9 @@
 				}
 			},
 			//签到
-			qian_dao() {
+			qian_dao(value) {
 				uni.navigateTo({
-					url: '../swiper/swiper1'
+					url: value
 				})
 			},
 			//首页功能入口展示

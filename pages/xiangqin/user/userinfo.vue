@@ -289,16 +289,7 @@
 				.then(res => {
 					console.log(res)
 					this.user_datas = res.data.data
-					console.log(this.user_datas)
-					if(this.user_datas == undefined){
-						
-					}
-					let img = res.data.data.photoUrl.replace('[','').replace(' ','').replace(']','')
-					this.img_url = img.split(',')
-					if(this.img_url != []){
-						this.to_photo = false
-					}
-					console.log(this.img_url)
+					
 					this.houseStatus = res.data.data.houseStatus
 					if(this.houseStatus == null || this.houseStatus == undefined){
 						this.houseStatus = '楼房'
@@ -321,10 +312,9 @@
 					}
 					if(res.data.data.idCard === null || res.data.data.idCard === undefined){
 						this.shiming = '实名'
-					}else{
+					}else if(res.data.data.idCard != ''){
 						this.shiming = '已实名'
 					}
-					console.log(this.houseStatus)
 					this.maritalStatus = res.data.data.maritalStatus
 					if(this.maritalStatus == null || this.maritalStatus == undefined){
 						this.maritalStatus = '暂无'
@@ -335,11 +325,16 @@
 					}else if(this.maritalStatus == 3){
 						this.maritalStatus = '丧偶'
 					}
-					let monthPayMin = res.data.data.monthPayMin
-					let monthPayMax = res.data.data.monthPayMax
-					this.money = monthPayMin+'~'+monthPayMax
+					if(res.data.data.monthPayMin == null){
+						this.money = '暂无'
+					}else{
+						let monthPayMin = res.data.data.monthPayMin
+						let monthPayMax = res.data.data.monthPayMax
+						this.money = monthPayMin+'~'+monthPayMax
+					}
+					
 					if(res.data.data.province == null){
-						this.region = '未选择'
+						this.region = '暂无'
 					}else if(res.data.data.city == null){
 						this.region = `${res.data.data.province}`
 					}else if(res.data.data.area == null){
@@ -347,7 +342,12 @@
 					}else{
 						this.region = `${res.data.data.province} ${res.data.data.city} ${res.data.data.area}`
 					}
-					
+					let img = res.data.data.photoUrl.replace('[','').replace(' ','').replace(']','')
+					this.img_url = img.split(',')
+					console.log(this.img_url)
+					if(res.data.data.photoUrl != [] || res.data.data.photoUrl == null){
+						this.to_photo = false
+					}
 					
 				})
 				.catch(err => {

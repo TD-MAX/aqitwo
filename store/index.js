@@ -9,7 +9,7 @@ const store = new Vuex.Store({
 	state: {
 		hasLogin: false, //是否登录
 		zhanshi: false, //爱恋消息提示
-		version: '1.0.0.1.16', //版本号
+		version: '1.0.0.2.1', //版本号
 		seIndex: 0, //收货地址
 		userInfo: {
 		},

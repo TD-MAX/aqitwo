@@ -127,7 +127,7 @@
 					enterprisePhone: this.qiyephone,
 					enterpriseLogo: this.photo,
 					enterpriseInfo: this.qiyejianjie,
-					activityName: "投票"
+					activityName: this.name
 				},{})
 				.then(res => {
 					console.log(res)
@@ -143,6 +143,9 @@
 					console.log(err)
 				})
 			}
+		},
+		onLoad(option) {
+			this.name = option.name
 		}
 	}
 </script>
@@ -195,7 +198,7 @@
 				color: #696969;
 				// font-weight: 600;
 				image {
-					width: 80upx;
+					width: 70upx;
 					height: 60upx;
 				}
 			}

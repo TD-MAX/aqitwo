@@ -58,7 +58,7 @@
 						</view>
 						<view class="content_event">
 							<view>
-								<image src="../../../static/xiangqin/fenxiang.png">
+								<image src="../../../static/xiangqin/fenxiang.png" @click="to_share">
 								<text>分享</text>
 							</view>
 							
@@ -124,6 +124,33 @@
 		},
 		methods: {
 			...mapMutations(['recept']),
+			//分享
+			to_share(){
+				console.log(uni.getStorageSync('yaoqingma'))
+				let yaoqingma = uni.getStorageSync('yaoqingma')
+				console.log('https://zhaopin.aqionline.cn/profile/web/share/share.html?shareCode='+yaoqingma)
+				if(yaoqingma == undefined || yaoqingma == null){
+					uni.showToast({
+						title:'请先在啊企推广计划生成邀请码',
+						icon:'none'
+					})
+				}else{
+					uni.share({
+						provider: "weixin",
+						scene: "WXSceneSession",
+						type: 0,
+						href: 'https://zhaopin.aqionline.cn/profile/web/share/share.html?shareCode='+yaoqingma,
+						title:'点击注册，现在注册可享神秘大礼！',
+						success(res) {
+							console.log("success:" + JSON.stringify(res));
+						},
+						fail(err) {
+							console.log("fail:" + JSON.stringify(err));
+						}
+					})
+				}
+				
+			},
 			//关注用户
 			guangzhu (event) {
 				console.log(event)
@@ -274,6 +301,7 @@ page{
 		font-size: 40rpx;
 		line-height: 100rpx;
 		box-sizing: border-box;
+		margin-top: 50rpx;
 		// padding: 0 24rpx;
 		.header_tit1{
 			color: #4EE0E0;

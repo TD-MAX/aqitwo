@@ -18,9 +18,9 @@
 			</view>
 		</view>
 		<view class="i_gz">
-			<view class="ge">
-				<p>0</p>
-				<text>我的人气</text>
+			<view class="ge" @click="go_fans(2)">
+				<p>{{visit}}</p>
+				<text>访客量</text>
 			</view>
 			<view class="ge" @click="go_fans(1)">
 				<p>{{user_info.guanzhu}}</p>
@@ -37,11 +37,35 @@
 				<text>{{a.text}}</text>
 			</view>
 		</view>
-		<view class="ziliao_body" v-show="tabIndex === 0">
-			<view class="biaoqian">
-				<view class="" v-for="(c,index2) in biaoqian" 
-				:key="index2">
-					{{c.text}}
+		<view class="user_xinxi" v-show="tabIndex === 0">
+			<text>个人信息：</text>
+			<view class="_xin">
+				<view class="views" v-for="(n,index1) in msg_list" :key="index1">
+					<image :src="n.src" mode="aspectFit"></image>
+					<text>{{n.text}}</text>
+				</view>
+			</view>
+			<view class="_xin">
+				<view class="views">
+					{{user_datas.vocation ? user_datas.vocation : '暂无'}}
+				</view>
+				<view class="views">
+					{{user_datas.age ? user_datas.age : '暂无'}}
+				</view>
+				<view class="views">
+					{{maritalStatus ? maritalStatus : '暂无'}}
+				</view>
+				<view class="views">
+					{{money ? money : '暂无'}}
+				</view>
+				<view class="views">
+					{{user_datas.height ? user_datas.height : '暂无'}}
+				</view>
+				<view class="views">
+					{{user_datas.weight ? user_datas.weight : '暂无'}}
+				</view>
+				<view class="viewss">
+					{{region ? region : '暂无'}}
 				</view>
 			</view>
 		</view>
@@ -102,26 +126,46 @@
 						text: '动态'
 					}
 				],
-				biaoqian: [
-					{
-						text: '北京户口'
-					},
-					{
-						text: '研究生'
-					},
-					{
-						text: '外企经理'
-					},
-					{
-						text: '一房二车'
-					}
-				],
 				src: '',
 				tabIndex: 0,
 				user_info: [],
 				pageNum: 1,
 				recogmentList:[],
-				loadingType: 'more'
+				loadingType: 'more',
+				visit:0,
+				user_datas:{},
+				maritalStatus:'',
+				money:'',
+				region:'',
+				msg_list: [{
+						text: '职业',
+						src: '../../../static/xiangqin/icon/zhiye.png'
+					},
+					{
+						text: '年龄',
+						src: '../../../static/xiangqin/icon/age.png'
+					},
+					{
+						text: '婚史',
+						src: '../../../static/xiangqin/icon/qing.png'
+					},
+					{
+						text: '收入',
+						src: '../../../static/xiangqin/icon/money.png'
+					},
+					{
+						text: '身高',
+						src: '../../../static/xiangqin/icon/height.png'
+					},
+					{
+						text: '体重',
+						src: '../../../static/xiangqin/icon/zhong.png'
+					},
+					{
+						text: '籍贯',
+						src: '../../../static/xiangqin/icon/jiguan.png'
+					}
+				],
 			}
 		},
 		onNavigationBarButtonTap() {
@@ -130,6 +174,7 @@
 			})
 		},
 		methods: {
+			
 			dian(e) {
 				this.tabIndex = e
 			},
@@ -186,7 +231,7 @@
 			//我的关注，粉丝
 			go_fans (n) {
 				switch (n) {
-					case 0 :
+					case 0:
 						uni.navigateTo({
 							url: '/pages/xiangqin/user/fans'
 						})
@@ -194,6 +239,11 @@
 					case 1:
 						uni.navigateTo({
 							url: '/pages/xiangqin/user/like'
+						})
+						break;
+					case 2:
+						uni.navigateTo({
+							url: '/pages/xiangqin/user/visit'
 						})
 				}
 			},
@@ -236,11 +286,39 @@
 				},{})
 				.then(res => {
 					console.log(res)
-					if (res.data.code === 0) {
-						let img = res.data.data.photoUrl.replace('[','').replace(' ','').replace(']','')
-						this.src = img.split(",")
-						console.log(this.src)
+					this.user_datas = res.data.data
+					
+					this.maritalStatus = res.data.data.maritalStatus
+					if(this.maritalStatus == null || this.maritalStatus == undefined){
+						this.maritalStatus = '暂无'
+					}else if(this.maritalStatus == 1){
+						this.maritalStatus = '未婚'
+					}else if(this.maritalStatus == 2){
+						this.maritalStatus = '离婚'
+					}else if(this.maritalStatus == 3){
+						this.maritalStatus = '丧偶'
 					}
+					if(res.data.data.monthPayMin == null){
+						this.money = '暂无'
+					}else{
+						let monthPayMin = res.data.data.monthPayMin
+						let monthPayMax = res.data.data.monthPayMax
+						this.money = monthPayMin+'~'+monthPayMax
+					}
+					if(res.data.data.province == null){
+						this.region = '暂无'
+					}else if(res.data.data.city == null){
+						this.region = `${res.data.data.province}`
+					}else if(res.data.data.area == null){
+						this.region = `${res.data.data.province} ${res.data.data.city}`
+					}else{
+						this.region = `${res.data.data.province} ${res.data.data.city} ${res.data.data.area}`
+					}
+					let img = res.data.data.photoUrl.replace('[','').replace(' ','').replace(']','')
+					this.src = img.split(',')
+					console.log(this.src)
+					
+					
 				})
 				.catch(err => {
 					console.log(err)
@@ -271,7 +349,22 @@
 			delete_msg(n) {
 				this.deleteIndex = n
 				this.$refs.popupDialog.open()
-			}
+			},
+			to_show(){
+				this.$http.post('lessonxiangqin/api/getUserVisit',{
+					userId: uni.getStorageSync('userId'),
+				},{})
+				.then(res => {
+					console.log(res)
+					if(res.data.data != []){
+						this.visit = res.data.data.length
+					}
+				})
+				.catch(err=>{
+					console.log(err)
+				})
+			},
+			
 		},
 		onShow() {
 			this.show()
@@ -280,6 +373,8 @@
 		},
 		onLoad() {
 			this.init()
+			this.to_show()
+			
 		}
 	}
 </script>
@@ -351,6 +446,45 @@
 			width: 80%;
 			font-size: 28upx;
 			text-align: center;
+		}
+	}
+	.user_xinxi {
+		width: 100%;
+		height: 420upx;
+		display: flex;
+		margin: 10upx auto;
+		padding: 10upx 4%;
+		box-sizing: border-box;
+		background-color: #fff;
+		color: #C2C2C2;
+		
+		
+		._xin {
+			width: 30%;
+			height: 100%;
+			// margin: 0 0 0 30upx;
+			// border: 1px solid red;
+			display: flex;
+			flex-direction: column;
+	
+			// justify-content: space-around;
+			.views {
+				width: 100%;
+				flex: 1;
+				display: flex;
+	
+				// justify-content: space-between;
+				image {
+					width: 40upx;
+					height: 40upx;
+					margin-right: 30upx;
+				}
+			}
+			.viewss {
+				width: 150%;
+				flex: 1;
+				display: flex;
+			}
 		}
 	}
 
@@ -500,24 +634,6 @@
 						color: #999;
 					}
 				}
-			}
-		}
-	}
-	.ziliao_body {
-		width: 100%;
-		.biaoqian {
-			width: 86%;
-			height: 150upx;
-			margin: auto;
-			display: flex;
-			view {
-				height: 60upx;
-				border-radius: 50upx;
-				background-color: #0086B3;
-				color: white;
-				text-align: center;
-				line-height: 60upx;
-				font-size: 28upx;
 			}
 		}
 	}

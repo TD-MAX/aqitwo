@@ -1,12 +1,19 @@
 <template>
 	<view class="content">
-		<view class="titleNview-placing"></view>
-		<!-- <view class="shuaxin">
-			<i class="iconfont" @click="dianji">&#xe6e1;</i>
-		</view> -->
+		<view class="header_tit">
+			<image src="../../../static/xiangqin/zuojiantou.png" mode="aspectFill" @click="fanhui"></image>
+			<picker mode="selector" :range="sxList" @change="sxChange"class="header_tit0">
+				<view class="header_tit1"><image src="../../../static/xiangqin/youshaixuan.png" mode="aspectFill"></image><view>筛选</view></view>
+			</picker>
+		</view>
 		<view class="item">
 			<view class="bottom_img">
-				<image src="../../../static/earth.png" mode="aspectFill"></image>
+				<view class="bottom_img1">
+					<image src="../../../static/earth.png" mode="aspectFill"></image>
+				</view>
+				<!-- <view class="bottom_button"><button @click="quanbu">全部</button>
+					<button @click="yixing">异性</button></view> -->
+
 			</view>
 			<view class="user_box">
 				<view class="user_name" v-for="(n, index) in user_data" :key="index" :style="'left:' + arr[index] + 'rpx;'" @click="go_details(n.id)">
@@ -37,13 +44,12 @@
 			return {
 				user_data: [],
 				arr: [],
+				sxList:['全部','附近异性'],
 				count: '',
 				zhanshi: this.$store.state.zhanshi, //底部导航栏未读消息是否展示
-				nickname:'',
-				cityCode:'0355',
-				areaCode:'0355',
-				headUrl:'',
-				gender:'',
+				nickname: '',
+				headUrl: '',
+				gender: '',
 			}
 		},
 		components: {
@@ -64,31 +70,57 @@
 				}
 			})
 		},
-		onShow() {
-		},
+		onShow() {},
 		onLoad() {
 			console.log(uni.getStorageSync('userId'))
 			if (uni.getStorageSync('news_user') == 1) {
 				this.show()
-				this.$http.post('lessonxiangqin/api/getUserInfo',{
-					userId:uni.getStorageSync('userId')
-				},{})
-				.then(res=>{
-					console.log(res)
-					uni.setStorageSync('payDeposit', res.data.data.payDeposit)
-					
-				})
-				.catch(err=>{
-					console.log(err)
-				})
+				this.$http.post('lessonxiangqin/api/getUserInfo', {
+						userId: uni.getStorageSync('userId')
+					}, {})
+					.then(res => {
+						console.log(res)
+						uni.setStorageSync('payDeposit', res.data.data.payDeposit)
+						this.nickname = res.data.data.nickname
+						this.headUrl = res.data.data.headUrl
+						this.gender = res.data.data.gender
+						if (this.gender == 1) {
+							this.gender = '男'
+						} else if (this.gender == 2) {
+							this.gender = '女'
+						}
+					})
+					.catch(err => {
+						console.log(err)
+					})
 			} else {
 				uni.redirectTo({
 					url: '/pages/xiangqin/login/index2'
 				})
 			}
-			
+			uni.getLocation({
+				type: 'gcj02',
+				geocode: true,
+				success: function(res) {
+					console.log(res)
+					console.log(this.areaCode)
+					uni.setStorage({
+						key: 'cityCode',
+						data: {
+							jindu: res.longitude,
+							weidu: res.latitude,
+							cityCode: res.address.cityCode,
+							areaCode: res.address.cityCode
+						}
+					})
+				},
+				fail: function(err) {
+					console.log(err);
+				}
+			});
+
 		},
-		
+
 		//下拉刷新
 		onPullDownRefresh() {
 			this.show()
@@ -101,48 +133,101 @@
 		// },
 		methods: {
 			...mapMutations(['recept']),
-			//渲染首页
-			show() {
+			fanhui(){
+				uni.reLaunch({
+					url:'../../index/index'
+				})
+			},
+			sxChange(e){
+				console.log(e)
+				if(e.detail.value == 0){
+					this.show()
+				}else if(e.detail.value == 1){
+					this.yixing()
+				}
+			},
+
+			yixing() {
 				let _this = this
 				let id = uni.getStorageSync('userId') //id
-				let longitude = uni.getStorageSync('location').jindu //经度
-				let latitude = uni.getStorageSync('location').weidu //纬度
 				console.log(id)
-				_this.arr = []
-				for (let i = 0; i < 10; i++) {
-					_this.arr.push(Math.random() * 580)
-				}
-				_this.$http.post('lessonxiangqin/api/lessonupdatezuobiao',
-				{
-						userid: id,
-						zuobiao: longitude + ',' + latitude
+
+				
+				_this.$http
+					.post('lessonxiangqin/api/nearby', {
+						userId: id,
+						nickname:this.nickname,
+						cityCode:uni.getStorageSync('cityCode').cityCode,
+						areaCode:uni.getStorageSync('cityCode').cityCode,
+						longitude:uni.getStorageSync('cityCode').jindu,
+						latitude:uni.getStorageSync('cityCode').weidu,
+						headUrl:this.headUrl,
+						gender:this.gender
 					}, {})
-					.then(res => {
-						console.log(res)
-						_this.$http
-							.post('lessonxiangqin/api/lessonusershouye', {
-								userid: id
-							}, {})
-							.then(response => {
-								console.log(response)
-								_this.user_data = response.data
-								console.log(_this.user_data)
-								_.each(_this.user_data, o => {
-									o.juli = Math.ceil(o.juli / 1000)
-								})
+					.then(response => {
+						console.log(response)
+						if(response.data.code != 200){
+							uni.showToast({
+								title:response.data.msg,
+								icon:"none"
 							})
-							.catch(err => {})
+						}else{
+							_this.user_data = response.data.data
+							console.log(_this.user_data.data)
+							
+							_.each(_this.user_data, o => {
+								o.juli = Math.ceil(o.juli / 1000)
+							})
+						}
+						
 					})
-					.catch(error => {
-						console.log(error)
-					})
-	},
-	//换一批
-	// dianji(){
-	// 	console.log('正在刷新')
-	// },
-	//去往私聊页面
-	go_details(n) {
+					.catch(err => {})
+
+
+			
+
+		},
+	//渲染首页
+	show() {
+			let _this = this
+			let id = uni.getStorageSync('userId') //id
+			let longitude = uni.getStorageSync('location').jindu //经度
+			let latitude = uni.getStorageSync('location').weidu //纬度
+			console.log(id)
+			_this.arr = []
+			for (let i = 0; i < 10; i++) {
+				_this.arr.push(Math.random() * 580)
+			}
+			_this.$http.post('lessonxiangqin/api/lessonupdatezuobiao', {
+					userid: id,
+					zuobiao: longitude + ',' + latitude
+				}, {})
+				.then(res => {
+					console.log(res)
+					_this.$http
+						.post('lessonxiangqin/api/lessonusershouye', {
+							userid: id
+						}, {})
+						.then(response => {
+							console.log(response)
+							_this.user_data = response.data
+							console.log(_this.user_data)
+							_.each(_this.user_data, o => {
+								o.juli = Math.ceil(o.juli / 1000)
+							})
+						})
+						.catch(err => {})
+				})
+				.catch(error => {
+					console.log(error)
+				})
+		},
+		//换一批
+		// dianji(){
+		// 	console.log('正在刷新')
+		// },
+		//去往私聊页面
+		go_details(n) {
 			console.log(n)
 			// console.log(this.user_data[0].id)
 			uni.navigateTo({
@@ -195,7 +280,45 @@
 		justify-content: center;
 		background-image: url('https://qilianxiangqin.oss-cn-beijing.aliyuncs.com/xiangqin/app/xingxingback.png');
 		background-size: cover;
-
+		// margin-top: 50rpx;
+		.header_tit{
+			display: flex;
+			height: 100rpx;
+			width: 100%;
+			font-size: 30rpx;
+			// line-height: 60rpx;
+			box-sizing: border-box;
+			color: white;
+			margin-top: 50rpx;
+			// padding: 0 24rpx;
+			.header_tit0{
+				margin-left: 60%;
+			}
+			.header_tit1{
+				display: flex;
+				margin-left: 100%;
+				height: 40rpx;
+				width: 120rpx;
+				border: 1px solid #333340;
+				border-radius: 20rpx;
+				margin-top: 20rpx;
+				image{
+					height: 30rpx;
+					width: 30rpx;
+					margin-top: 5rpx;
+					margin-left: 10%;
+				}
+				view{
+					margin-left: 5rpx;
+				}
+			}
+			image{
+				height: 40rpx;
+				width: 20rpx;
+				margin-top: 20rpx;
+				margin-left: 2%;
+			}
+		}
 		// .shuaxin{
 		// 	position: fixed;
 		// 	top: 90upx;
@@ -219,10 +342,33 @@
 				position: absolute;
 				bottom: 100rpx;
 
-				image {
+				// display: flex;
+				.bottom_img1 {
 					width: 100%;
 					height: 100%;
+
+					image {
+						width: 100%;
+						height: 100%;
+					}
 				}
+
+				.bottom_button {
+					display: flex;
+					width: 300rpx;
+					height: 80rpx;
+					margin-top: -100rpx;
+					margin-left: 226rpx;
+
+					button {
+						width: 300rpx;
+						height: 80rpx;
+						// margin-left: 20rpx;
+						background-color: #25D3D2;
+					}
+				}
+
+
 			}
 
 			.user_box {
